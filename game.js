@@ -49,7 +49,7 @@ Matrix = function (rows, columns) {
     var sin = Math.sin(rad) * scale;
     var cos = Math.cos(rad) * scale;
     this.set(cos, -sin, transx,
-             sin,  cos, transy);
+        sin,  cos, transy);
   };
 
   this.set = function () {
@@ -279,8 +279,8 @@ Sprite = function () {
   };
   this.checkCollision = function (other) {
     if (!other.visible ||
-         this == other ||
-         this.collidesWith.indexOf(other.name) == -1) return;
+        this == other ||
+        this.collidesWith.indexOf(other.name) == -1) return;
     var trans = other.transformedPoints();
     var px, py;
     var count = trans.length/2;
@@ -349,14 +349,14 @@ Sprite = function () {
       cn = this.grid[gridx][gridy];
     }
     return (cn.isEmpty(this.collidesWith) &&
-            cn.north.isEmpty(this.collidesWith) &&
-            cn.south.isEmpty(this.collidesWith) &&
-            cn.east.isEmpty(this.collidesWith) &&
-            cn.west.isEmpty(this.collidesWith) &&
-            cn.north.east.isEmpty(this.collidesWith) &&
-            cn.north.west.isEmpty(this.collidesWith) &&
-            cn.south.east.isEmpty(this.collidesWith) &&
-            cn.south.west.isEmpty(this.collidesWith));
+        cn.north.isEmpty(this.collidesWith) &&
+        cn.south.isEmpty(this.collidesWith) &&
+        cn.east.isEmpty(this.collidesWith) &&
+        cn.west.isEmpty(this.collidesWith) &&
+        cn.north.east.isEmpty(this.collidesWith) &&
+        cn.north.west.isEmpty(this.collidesWith) &&
+        cn.south.east.isEmpty(this.collidesWith) &&
+        cn.south.west.isEmpty(this.collidesWith));
   };
   this.wrapPostMove = function () {
     if (this.x > Game.canvasWidth) {
@@ -375,9 +375,9 @@ Sprite = function () {
 
 Ship = function () {
   this.init("ship",
-            [-6,   7,
-              0, -11,
-              6,   7]);
+      [-6,   7,
+        0, -11,
+        6,   7]);
 
   this.color = 'navy';
   this.solid = true;
@@ -386,11 +386,11 @@ Ship = function () {
   this.children.exhaust.solid = true;
   this.children.exhaust.color = 'red';
   this.children.exhaust.init("exhaust",
-                             [-3,  6,
-                               0, 11,
-                               3,  6]);
+      [-3,  6,
+        0, 11,
+        3,  6]);
 
-  this.delayBeforeBullet = 0;
+  this.delayBeforeBullet = 10;
 
   this.postMove = this.wrapPostMove;
 
@@ -421,6 +421,7 @@ Ship = function () {
     }
     if (KEY_STATUS.space) {
       if (this.delayBeforeBullet <= 0) {
+        this.delayBeforeBullet = 10;
         for (var i = 0; i < this.bullets.length; i++) {
           if (!this.bullets[i].visible) {
             SFX.laser();
@@ -462,29 +463,29 @@ Ship.prototype = new Sprite();
 
 BigAlien = function () {
   this.init("bigalien",
-            [-20,   0,
-             -12,  -4,
-              12,  -4,
-              20,   0,
-              12,   4,
-             -12,   4,
-             -20,   0,
-              20,   0]);
+      [-20,   0,
+        -12,  -4,
+        12,  -4,
+        20,   0,
+        12,   4,
+        -12,   4,
+        -20,   0,
+        20,   0]);
 
   this.children.top = new Sprite();
   this.children.top.init("bigalien_top",
-                         [-8, -4,
-                          -6, -6,
-                           6, -6,
-                           8, -4]);
+      [-8, -4,
+        -6, -6,
+        6, -6,
+        8, -4]);
   this.children.top.visible = true;
 
   this.children.bottom = new Sprite();
   this.children.bottom.init("bigalien_top",
-                            [ 8, 4,
-                              6, 6,
-                             -6, 6,
-                             -8, 4]);
+      [ 8, 4,
+        6, 6,
+        -6, 6,
+        -8, 4]);
   this.children.bottom.visible = true;
 
   this.collidesWith = ["asteroid", "ship", "bullet"];
@@ -539,6 +540,7 @@ BigAlien = function () {
 
     this.delayBeforeBullet -= delta;
     if (this.delayBeforeBullet <= 0) {
+      this.delayBeforeBullet = 22;
       for (var i = 0; i < this.bullets.length; i++) {
         if (!this.bullets[i].visible) {
           bullet = this.bullets[i];
@@ -648,16 +650,16 @@ AlienBullet.prototype = new Bullet();
 
 Asteroid = function () {
   this.init("asteroid",
-            [-10,   0,
-              -5,   7,
-              -3,   4,
-               1,  10,
-               5,   4,
-              10,   0,
-               5,  -6,
-               2, -10,
-              -4, -10,
-              -4,  -5]);
+      [-10,   0,
+        -5,   7,
+        -3,   4,
+        1,  10,
+        5,   4,
+        10,   0,
+        5,  -6,
+        2, -10,
+        -4, -10,
+        -4,  -5]);
 
   this.color = 'lightgray';
   this.solid = true;
@@ -943,7 +945,7 @@ Game = {
         if (Game.sprites[i].name == 'asteroid') {
           Game.sprites[i].die();
         } else if (Game.sprites[i].name == 'bullet' ||
-                   Game.sprites[i].name == 'bigalien') {
+            Game.sprites[i].name == 'bigalien') {
           Game.sprites[i].visible = false;
         }
       }
@@ -1129,13 +1131,13 @@ $(function () {
   // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
   window.requestAnimFrame = (function () {
     return  window.requestAnimationFrame       ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            window.oRequestAnimationFrame      ||
-            window.msRequestAnimationFrame     ||
-            function (/* function */ callback, /* DOMElement */ element) {
-              window.setTimeout(callback, 1000 / 60);
-            };
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame    ||
+        window.oRequestAnimationFrame      ||
+        window.msRequestAnimationFrame     ||
+        function (/* function */ callback, /* DOMElement */ element) {
+          window.setTimeout(callback, 1000 / 60);
+        };
   })();
 
   var mainLoop = function () {
